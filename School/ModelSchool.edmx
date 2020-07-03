@@ -1,0 +1,268 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Хранилище schoolModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Ball">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdStud" Type="int" Nullable="false" />
+          <Property Name="IdPredm" Type="int" Nullable="false" />
+          <Property Name="Ball" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="Predm">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="Stud">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FirstName" Type="nvarchar(max)" />
+          <Property Name="MiddleName" Type="nvarchar(max)" />
+          <Property Name="LastName" Type="nvarchar(max)" />
+          <Property Name="Class" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="Teachers">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="MiddleName" Type="nvarchar(max)" />
+          <Property Name="LastName" Type="nvarchar(max)" />
+          <Property Name="Phone" Type="nvarchar(max)" />
+          <Property Name="IdPredm" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Ball_Predm">
+          <End Role="Predm" Type="Self.Predm" Multiplicity="1" />
+          <End Role="Ball" Type="Self.Ball" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Predm">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Ball">
+              <PropertyRef Name="IdPredm" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Ball_Stud">
+          <End Role="Stud" Type="Self.Stud" Multiplicity="1" />
+          <End Role="Ball" Type="Self.Ball" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Stud">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Ball">
+              <PropertyRef Name="IdStud" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Teachers_Predm">
+          <End Role="Predm" Type="Self.Predm" Multiplicity="1" />
+          <End Role="Teachers" Type="Self.Teachers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Predm">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Teachers">
+              <PropertyRef Name="IdPredm" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Хранилище schoolModelContainer">
+          <EntitySet Name="Ball" EntityType="Self.Ball" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Predm" EntityType="Self.Predm" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Stud" EntityType="Self.Stud" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Teachers" EntityType="Self.Teachers" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Ball_Predm" Association="Self.FK_Ball_Predm">
+            <End Role="Predm" EntitySet="Predm" />
+            <End Role="Ball" EntitySet="Ball" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Ball_Stud" Association="Self.FK_Ball_Stud">
+            <End Role="Stud" EntitySet="Stud" />
+            <End Role="Ball" EntitySet="Ball" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Teachers_Predm" Association="Self.FK_Teachers_Predm">
+            <End Role="Predm" EntitySet="Predm" />
+            <End Role="Teachers" EntitySet="Teachers" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="schoolModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Ball">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdStud" Type="Int32" Nullable="false" />
+          <Property Name="IdPredm" Type="Int32" Nullable="false" />
+          <Property Name="Ball1" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Predm" Relationship="Self.FK_Ball_Predm" FromRole="Ball" ToRole="Predm" />
+          <NavigationProperty Name="Stud" Relationship="Self.FK_Ball_Stud" FromRole="Ball" ToRole="Stud" />
+        </EntityType>
+        <EntityType Name="Predm">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Ball" Relationship="Self.FK_Ball_Predm" FromRole="Predm" ToRole="Ball" />
+          <NavigationProperty Name="Teachers" Relationship="Self.FK_Teachers_Predm" FromRole="Predm" ToRole="Teachers" />
+        </EntityType>
+        <EntityType Name="Stud">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FirstName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="MiddleName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="LastName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Class" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Ball" Relationship="Self.FK_Ball_Stud" FromRole="Stud" ToRole="Ball" />
+        </EntityType>
+        <EntityType Name="Teachers">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MiddleName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="LastName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Phone" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="IdPredm" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Predm" Relationship="Self.FK_Teachers_Predm" FromRole="Teachers" ToRole="Predm" />
+        </EntityType>
+        <Association Name="FK_Ball_Predm">
+          <End Role="Predm" Type="Self.Predm" Multiplicity="1" />
+          <End Role="Ball" Type="Self.Ball" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Predm">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Ball">
+              <PropertyRef Name="IdPredm" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Ball_Stud">
+          <End Role="Stud" Type="Self.Stud" Multiplicity="1" />
+          <End Role="Ball" Type="Self.Ball" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Stud">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Ball">
+              <PropertyRef Name="IdStud" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Teachers_Predm">
+          <End Role="Predm" Type="Self.Predm" Multiplicity="1" />
+          <End Role="Teachers" Type="Self.Teachers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Predm">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Teachers">
+              <PropertyRef Name="IdPredm" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="SchoolEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Ball" EntityType="Self.Ball" />
+          <EntitySet Name="Predm" EntityType="Self.Predm" />
+          <EntitySet Name="Stud" EntityType="Self.Stud" />
+          <EntitySet Name="Teachers" EntityType="Self.Teachers" />
+          <AssociationSet Name="FK_Ball_Predm" Association="Self.FK_Ball_Predm">
+            <End Role="Predm" EntitySet="Predm" />
+            <End Role="Ball" EntitySet="Ball" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Ball_Stud" Association="Self.FK_Ball_Stud">
+            <End Role="Stud" EntitySet="Stud" />
+            <End Role="Ball" EntitySet="Ball" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Teachers_Predm" Association="Self.FK_Teachers_Predm">
+            <End Role="Predm" EntitySet="Predm" />
+            <End Role="Teachers" EntitySet="Teachers" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Хранилище schoolModelContainer" CdmEntityContainer="SchoolEntities">
+          <EntitySetMapping Name="Ball">
+            <EntityTypeMapping TypeName="schoolModel.Ball">
+              <MappingFragment StoreEntitySet="Ball">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="IdStud" ColumnName="IdStud" />
+                <ScalarProperty Name="IdPredm" ColumnName="IdPredm" />
+                <ScalarProperty Name="Ball1" ColumnName="Ball" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Predm">
+            <EntityTypeMapping TypeName="schoolModel.Predm">
+              <MappingFragment StoreEntitySet="Predm">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Stud">
+            <EntityTypeMapping TypeName="schoolModel.Stud">
+              <MappingFragment StoreEntitySet="Stud">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="MiddleName" ColumnName="MiddleName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="Class" ColumnName="Class" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Teachers">
+            <EntityTypeMapping TypeName="schoolModel.Teachers">
+              <MappingFragment StoreEntitySet="Teachers">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="MiddleName" ColumnName="MiddleName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="IdPredm" ColumnName="IdPredm" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
